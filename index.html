@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Korea Rescue — your first day in Korea, sorted</title>
-<meta name="description" content="An independent survival guide for foreign travelers in Korea: eSIM, transit & payment cards, KTX, taxis, identity-verification workarounds, food, tickets — one flow.">
+<meta name="description" content="An independent survival guide for foreign travelers in Korea: eSIM, transit & payment cards, KTX, taxis, identity-verification workarounds, food, tickets — one flow. EN / 한국어 / 日本語 / 中文.">
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -27,7 +27,7 @@ html[data-theme="dark"]{
 html,body{margin:0;padding:0}
 body{
   background:var(--bg); color:var(--ink);
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",Roboto,"Noto Sans KR",sans-serif;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",Roboto,"Noto Sans KR","Noto Sans JP",sans-serif;
   line-height:1.55; padding:0 16px env(safe-area-inset-bottom);
   -webkit-font-smoothing:antialiased;
 }
@@ -35,19 +35,20 @@ body{
 a{color:inherit}
 
 /* appbar */
-.appbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:8px;
+.appbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:7px;
   padding:12px 0 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);margin:0 -16px;padding-left:16px;padding-right:16px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;letter-spacing:-.3px}
-.brand .logo{width:26px;height:26px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:15px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;letter-spacing:-.3px;white-space:nowrap}
+.brand .logo{width:26px;height:26px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:15px;flex:none}
 .spacer{flex:1}
 .iconbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
-  height:34px;min-width:34px;padding:0 9px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+  height:34px;min-width:34px;padding:0 9px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;flex:none}
 .iconbtn:active{transform:scale(.96)}
-.langsel{display:flex;background:var(--seg-bg);border-radius:10px;padding:2px}
+.langsel{display:flex;background:var(--seg-bg);border-radius:10px;padding:2px;flex:none}
 .langsel button{appearance:none;border:0;background:transparent;color:var(--muted);font-weight:700;
-  font-size:12.5px;padding:5px 9px;border-radius:8px;cursor:pointer}
+  font-size:12px;padding:5px 7px;border-radius:8px;cursor:pointer}
 .langsel button.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+@media(max-width:400px){ .brand span:last-child{display:none} .appbar{gap:6px} }
 
 /* hero */
 .hero{padding:26px 0 10px}
@@ -131,13 +132,15 @@ footer .moa{display:inline-flex;align-items:center;gap:6px;margin-top:10px;color
     <div class="langsel" id="langSel">
       <button data-l="en" class="on">EN</button>
       <button data-l="ko">한</button>
+      <button data-l="ja">日</button>
+      <button data-l="zh">中</button>
     </div>
   </div>
 
   <div class="hero">
     <span class="pill" data-i18n="heroPill">Independent survival guide</span>
     <h1 data-i18n="heroTitle">Your first day in Korea, sorted.</h1>
-    <p data-i18n="heroSub">eSIM, transit cards, KTX, taxis, payments and more — in one flow, made for foreigners and gyopo. No Korean phone number needed to read it.</p>
+    <p data-i18n="heroSub">eSIM, transit cards, KTX, taxis, payments and more — in one flow, made for foreigners and gyopo.</p>
   </div>
 
   <nav class="nav" id="nav"></nav>
@@ -161,100 +164,104 @@ footer .moa{display:inline-flex;align-items:center;gap:6px;margin-top:10px;color
 
 <script>
 /* ============================================================
-   AFFILIATE / LINK CONFIG  —  ⚠️ 수익화하려면 여기를 본인 어필리에이트 링크로 교체
-   각 프로그램(Klook / Trip.com / KKday / Trazy 등)에 가입한 뒤,
-   발급받은 추적링크(또는 ?aff=YOUR_ID)를 아래 값에 넣으세요.
-   지금은 일반 공개 URL이라 그대로도 작동하지만 커미션은 안 붙습니다.
+   AFFILIATE / LINK CONFIG  —  ⚠️ 수익화하려면 본인 어필리에이트 링크로 교체
+   각 프로그램(Klook / Trip.com / KKday / Trazy 등) 가입 후 추적링크를 넣으세요.
    ============================================================ */
 const LINKS = {
-  esimKlook:   "https://www.klook.com/en-US/esim/",       // Klook eSIM (어필리에이트 최대 ~20%)
-  esimAiralo:  "https://www.airalo.com/south-korea-esim",
-  wowpass:     "https://www.wowpass.io/",
-  namane:      "https://en.namanecard.com/",
-  climate:     "https://english.seoul.go.kr/policy/transportation/climate-card/",
-  tmoney:      "https://www.t-money.co.kr/ncs/pct/ugd/ReadFrgnGd.dev",
-  ktxTrip:     "https://www.trip.com/trains/korea/",       // Trip.com (코레일 공식 파트너)
-  ktxKlook:    "https://www.klook.com/en-US/ktx/",         // Klook KTX & Korail Pass
-  ktxKKday:    "https://www.kkday.com/en/product/productlist/A01-001255", // KKday rail
-  kride:       "https://k-ride.kakaomobility.com/",        // k.ride (카카오 외국인 전용 택시앱)
-  kakaoT:      "https://www.kakaomobility.com/service/kakaot",
-  uberTaxi:    "https://www.uber.com/kr/en/",
-  catchtable:  "https://app.catchtable.co.kr/ct/?lang=en", // CatchTable Global
-  happycow:    "https://www.happycow.net/asia/south_korea/seoul/",
-  bluer:       "https://en.bluer.co.kr/",
-  nol:         "https://world.nol.com/en",                 // NOL World (구 Interpark Global)
-  melon:       "https://gticket.melon.com/",
-  klookKpop:   "https://www.klook.com/en-US/search/?query=kpop", // Klook K-pop
-  trazy:       "https://www.trazy.com/",
-  visitkorea:  "https://english.visitkorea.or.kr/enu/TRV/calendar.jsp",
-  visitseoul:  "https://english.visitseoul.net/events",
-  papago:      "https://papago.naver.com/",
-  kakaomap:    "https://map.kakao.com/"
+  esimKlook:"https://www.klook.com/en-US/esim/", esimAiralo:"https://www.airalo.com/south-korea-esim",
+  wowpass:"https://www.wowpass.io/", namane:"https://en.namanecard.com/",
+  climate:"https://english.seoul.go.kr/policy/transportation/climate-card/",
+  tmoney:"https://www.t-money.co.kr/ncs/pct/ugd/ReadFrgnGd.dev",
+  ktxTrip:"https://www.trip.com/trains/korea/", ktxKlook:"https://www.klook.com/en-US/ktx/",
+  ktxKKday:"https://www.kkday.com/en/product/productlist/A01-001255",
+  kride:"https://k-ride.kakaomobility.com/", kakaoT:"https://www.kakaomobility.com/service/kakaot",
+  uberTaxi:"https://www.uber.com/kr/en/",
+  catchtable:"https://app.catchtable.co.kr/ct/?lang=en", happycow:"https://www.happycow.net/asia/south_korea/seoul/",
+  bluer:"https://en.bluer.co.kr/", nol:"https://world.nol.com/en", melon:"https://gticket.melon.com/",
+  klookKpop:"https://www.klook.com/en-US/search/?query=kpop", trazy:"https://www.trazy.com/",
+  visitkorea:"https://english.visitkorea.or.kr/enu/TRV/calendar.jsp", visitseoul:"https://english.visitseoul.net/events",
+  papago:"https://papago.naver.com/", kakaomap:"https://map.kakao.com/"
 };
 
 /* ============================================================
-   UI 문자열 (EN / KO)
+   UI 문자열 (EN / KO / JA / ZH)
    ============================================================ */
 const UI = {
-  en:{ heroPill:"Independent survival guide",
-    heroTitle:"Your first day in Korea, sorted.",
+  en:{ heroPill:"Independent survival guide", heroTitle:"Your first day in Korea, sorted.",
     heroSub:"eSIM, transit cards, KTX, taxis, payments and more — in one flow, made for foreigners and gyopo. No Korean phone number needed to read it.",
     clTitle:"Arrival checklist", clSub:"Tap to check off. Saved on this device.",
-    footMade:"Built by a traveler who has felt every one of these pains.",
-    footMoa:"part of the moa collection",
+    footMade:"Built by a traveler who has felt every one of these pains.", footMoa:"part of the moa collection",
     disc:"Independent guide — not affiliated with the services listed. Some links may be affiliate links that support this project at no extra cost to you. Prices, rules and apps change fast — always confirm on the official page before you buy.",
-    open:"Open", progress:(n,t)=>`${n} / ${t} done`,
-    pickerHint:"Answer 2 questions:" },
-  ko:{ heroPill:"독립 서바이벌 가이드",
-    heroTitle:"한국에서의 첫날, 한 번에 정리.",
+    progress:(n,t)=>`${n} / ${t} done` },
+  ko:{ heroPill:"독립 서바이벌 가이드", heroTitle:"한국에서의 첫날, 한 번에 정리.",
     heroSub:"eSIM·교통카드·KTX·택시·결제까지 한 흐름으로 — 외국인과 교포를 위해. 읽는 데 한국 전화번호 필요 없음.",
     clTitle:"도착 체크리스트", clSub:"눌러서 체크. 이 기기에 저장됩니다.",
-    footMade:"이 불편을 모두 직접 겪어본 여행자가 만들었습니다.",
-    footMoa:"moa 컬렉션의 일부",
+    footMade:"이 불편을 모두 직접 겪어본 여행자가 만들었습니다.", footMoa:"moa 컬렉션의 일부",
     disc:"독립 가이드입니다 — 소개된 서비스와 제휴 관계 없음. 일부 링크는 어필리에이트일 수 있으며(추가 비용 없음) 이 프로젝트를 후원합니다. 가격·규정·앱은 빠르게 바뀌니 구매 전 공식 페이지에서 반드시 확인하세요.",
-    open:"열기", progress:(n,t)=>`${n} / ${t} 완료`,
-    pickerHint:"2가지만 답하세요:" }
+    progress:(n,t)=>`${n} / ${t} 완료` },
+  ja:{ heroPill:"独立系サバイバルガイド", heroTitle:"韓国での初日を、まるごと解決。",
+    heroSub:"eSIM・交通カード・KTX・タクシー・決済までひとつの流れで。外国人と在外コリアンのために。読むのに韓国の電話番号は不要。",
+    clTitle:"到着チェックリスト", clSub:"タップでチェック。この端末に保存されます。",
+    footMade:"これらの不便をすべて経験した旅行者が作りました。", footMoa:"moa コレクションの一部",
+    disc:"独立したガイドです — 掲載サービスとは無関係。一部はアフィリエイトリンクの場合があり（追加費用なし）、本プロジェクトを支援します。価格・規則・アプリは頻繁に変わるため、購入前に必ず公式ページで確認してください。",
+    progress:(n,t)=>`${n} / ${t} 完了` },
+  zh:{ heroPill:"独立生存指南", heroTitle:"搞定你在韩国的第一天。",
+    heroSub:"eSIM、交通卡、KTX、出租车、支付，一站式搞定 — 为外国人和海外韩裔打造。阅读无需韩国手机号。",
+    clTitle:"到达清单", clSub:"点击勾选。保存在此设备。",
+    footMade:"由一位亲历所有这些不便的旅行者打造。", footMoa:"moa 系列的一部分",
+    disc:"独立指南 — 与所列服务无关联。部分链接可能为联盟链接（不增加您的费用），用于支持本项目。价格、规则和应用变化很快，购买前请务必在官方页面确认。",
+    progress:(n,t)=>`${n} / ${t} 完成` }
 };
 
 /* checklist items */
 const CHECK = [
-  { en:["Get an eSIM or SIM","Maps, taxi, translate all need data"], ko:["eSIM 또는 유심 준비","지도·택시·번역 모두 데이터 필요"] },
-  { en:["Get a transit + payment card","WOWPASS / NAMANE / T-money"], ko:["교통+결제 카드 마련","WOWPASS / NAMANE / T-money"] },
-  { en:["Install a taxi app","k.ride or Kakao T"], ko:["택시앱 설치","k.ride 또는 카카오T"] },
-  { en:["Install Kakao Map or Naver Map","Google Maps directions are weak here"], ko:["카카오맵/네이버맵 설치","구글맵 길찾기는 한국서 약함"] },
-  { en:["Install Papago (translate)","Camera translates menus & signs"], ko:["파파고(번역) 설치","카메라로 메뉴·간판 번역"] },
-  { en:["Know the 본인인증 limits","Why some Korean apps will reject you"], ko:["본인인증 한계 알기","일부 한국 앱이 막히는 이유"] }
+  { en:["Get an eSIM or SIM","Maps, taxi, translate all need data"], ko:["eSIM 또는 유심 준비","지도·택시·번역 모두 데이터 필요"], ja:["eSIMまたはSIMを用意","地図・タクシー・翻訳すべてに通信が必要"], zh:["准备 eSIM 或 SIM 卡","地图、出租车、翻译都需要流量"] },
+  { en:["Get a transit + payment card","WOWPASS / NAMANE / T-money"], ko:["교통+결제 카드 마련","WOWPASS / NAMANE / T-money"], ja:["交通+決済カードを入手","WOWPASS / NAMANE / T-money"], zh:["办一张交通+支付卡","WOWPASS / NAMANE / T-money"] },
+  { en:["Install a taxi app","k.ride or Kakao T"], ko:["택시앱 설치","k.ride 또는 카카오T"], ja:["タクシーアプリを入れる","k.ride または Kakao T"], zh:["安装打车软件","k.ride 或 Kakao T"] },
+  { en:["Install Kakao Map or Naver Map","Google Maps directions are weak here"], ko:["카카오맵/네이버맵 설치","구글맵 길찾기는 한국서 약함"], ja:["Kakao Map か Naver Map を入れる","Googleマップの経路は韓国では弱い"], zh:["安装 Kakao Map 或 Naver Map","谷歌地图在韩国导航较弱"] },
+  { en:["Install Papago (translate)","Camera translates menus & signs"], ko:["파파고(번역) 설치","카메라로 메뉴·간판 번역"], ja:["Papago（翻訳）を入れる","カメラでメニューや看板を翻訳"], zh:["安装 Papago（翻译）","用相机翻译菜单和招牌"] },
+  { en:["Know the ID-check (본인인증) limits","Why some Korean apps will reject you"], ko:["본인인증 한계 알기","일부 한국 앱이 막히는 이유"], ja:["本人認証（본인인증）の限界を知る","一部の韓国アプリで弾かれる理由"], zh:["了解“本人认证(본인인증)”的限制","部分韩国应用会拒绝你的原因"] }
 ];
 
 /* ============================================================
-   MODULES  —  the orchestrator content
+   MODULES
    ============================================================ */
 const MODULES = [
-  { id:"esim", icon:"📶", nav:{en:"eSIM",ko:"eSIM"},
+  { id:"esim", icon:"📶", nav:{en:"eSIM",ko:"eSIM",ja:"eSIM",zh:"eSIM"},
     en:{ title:"Get online (eSIM)", desc:"Be connected the moment you land — everything else depends on it.",
       bul:["Buy an eSIM before you fly; activate on arrival in minutes.","Your foreign card works — no Korean ID needed.","Powers maps, taxi apps, translation and this guide."],
       warn:["A data eSIM/SIM does NOT give you Korean “본인인증” (identity verification). That's normal — you don't need it for anything in this guide."] },
     ko:{ title:"인터넷 개통 (eSIM)", desc:"내리는 순간부터 연결 — 나머지가 다 여기에 달려 있어요.",
       bul:["출국 전에 eSIM 구매 → 도착하면 몇 분 만에 활성화.","해외 카드로 결제 가능 — 한국 신분증 불필요.","지도·택시·번역·이 가이드까지 모두 데이터로 동작."],
       warn:["데이터 eSIM/유심은 한국 “본인인증”을 주지 않습니다. 정상이며, 이 가이드의 어떤 것도 본인인증이 필요 없어요."] },
-    act:[ {en:"Buy eSIM (Klook)",ko:"eSIM 구매 (Klook)",url:LINKS.esimKlook,aff:1},
-          {en:"Compare (Airalo)",ko:"비교 (Airalo)",url:LINKS.esimAiralo,ghost:1} ] },
+    ja:{ title:"ネット開通（eSIM）", desc:"着いた瞬間から接続を — 他のすべてがこれに懸かっています。",
+      bul:["出発前にeSIMを購入 → 到着後、数分で有効化。","海外発行カードで決済OK — 韓国の身分証は不要。","地図・タクシー・翻訳・このガイドもすべて通信で動作。"],
+      warn:["データ用eSIM/SIMは韓国の「본인인증（本人認証）」を付与しません。正常で、本ガイドのどれにも本人認証は不要です。"] },
+    zh:{ title:"先上网（eSIM）", desc:"落地即联网 — 其他一切都依赖于此。",
+      bul:["出发前买好 eSIM，到达后几分钟即可激活。","可用境外银行卡支付 — 无需韩国身份证。","地图、打车、翻译和本指南都靠流量运行。"],
+      warn:["数据 eSIM/SIM 不会给你韩国的“本人认证(본인인증)”。这很正常，本指南中的任何功能都不需要它。"] },
+    act:[ {en:"Buy eSIM (Klook)",ko:"eSIM 구매 (Klook)",ja:"eSIMを買う (Klook)",zh:"购买 eSIM (Klook)",url:LINKS.esimKlook,aff:1},
+          {en:"Compare (Airalo)",ko:"비교 (Airalo)",ja:"比較 (Airalo)",zh:"比较 (Airalo)",url:LINKS.esimAiralo,ghost:1} ] },
 
-  { id:"money", icon:"💳", nav:{en:"Card",ko:"카드"},
-    en:{ title:"Money & transit card", desc:"One card to tap on subway/bus/taxi and pay at shops. Pick the right one for your trip.",
-      picker:1,
+  { id:"money", icon:"💳", nav:{en:"Card",ko:"카드",ja:"カード",zh:"卡"},
+    en:{ title:"Money & transit card", desc:"One card to tap on subway/bus/taxi and pay at shops. Pick the right one for your trip.", picker:1,
       bul:["WOWPASS — prepaid debit + currency exchange + T-money in one. Feed foreign cash at kiosks. Issue ₩5,000.","NAMANE — top up anywhere from the app with a foreign card / Apple&Google Pay. Customizable design. Issue ₩7,000.","Climate Card — Seoul unlimited pass (1/2/3/5/7-day ₩5k–20k). Buyable with foreign cards; iPhone needs the physical card.","T-money — simplest tap-card, nationwide. Buy at any CU/GS25/7-Eleven. Top-up is cash only."],
-      warn:["Mobile T-money / Apple Wallet T-money usually need a Korean card to top up — most tourists end up using a physical card + cash, or WOWPASS/NAMANE."] },
-    ko:{ title:"교통·결제 카드", desc:"지하철·버스·택시에 태그하고 상점 결제까지 한 카드로. 여행에 맞게 고르세요.",
-      picker:1,
+      warn:["Mobile T-money / Apple Wallet T-money usually need a Korean card to top up — most tourists use a physical card + cash, or WOWPASS/NAMANE."] },
+    ko:{ title:"교통·결제 카드", desc:"지하철·버스·택시에 태그하고 상점 결제까지 한 카드로. 여행에 맞게 고르세요.", picker:1,
       bul:["WOWPASS — 선불 체크카드 + 환전 + T-money 일체형. 키오스크에 외화 현금 투입. 발급 ₩5,000.","NAMANE — 앱에서 해외카드/애플·구글페이로 어디서나 충전. 디자인 커스텀. 발급 ₩7,000.","기후동행카드 — 서울 무제한(1/2/3/5/7일 ₩5천–2만). 해외카드 구매 가능, 아이폰은 실물카드 필요.","T-money — 가장 단순한 태그카드, 전국. CU/GS25/세븐일레븐서 구매. 충전은 현금만."],
       warn:["모바일/애플월렛 T-money는 보통 충전에 한국 카드가 필요 — 대부분 실물카드+현금, 또는 WOWPASS/NAMANE를 씁니다."] },
-    act:[ {en:"WOWPASS",ko:"WOWPASS",url:LINKS.wowpass},
-          {en:"NAMANE",ko:"NAMANE",url:LINKS.namane,ghost:1},
-          {en:"Climate Card",ko:"기후동행카드",url:LINKS.climate,ghost:1},
-          {en:"Where to buy T-money",ko:"T-money 구매처",url:LINKS.tmoney,ghost:1} ] },
+    ja:{ title:"お金＆交通カード", desc:"地下鉄・バス・タクシーにタッチし、店でも支払える1枚。旅程に合わせて選びましょう。", picker:1,
+      bul:["WOWPASS — プリペイドデビット＋両替＋T-moneyが一体。キオスクに外貨現金を投入。発行₩5,000。","NAMANE — アプリから海外カード/Apple・Google Payでどこでもチャージ。デザイン自由。発行₩7,000。","気候同行カード — ソウル乗り放題（1/2/3/5/7日 ₩5千〜2万）。海外カードで購入可、iPhoneは実物カードが必要。","T-money — 最もシンプルなタッチ式、全国対応。CU/GS25/セブンで購入。チャージは現金のみ。"],
+      warn:["モバイル/Apple Wallet版T-moneyはチャージに韓国カードが必要なことが多く、多くの旅行者は実物カード+現金、またはWOWPASS/NAMANEを使います。"] },
+    zh:{ title:"钱与交通卡", desc:"一张卡刷地铁/公交/出租，还能在商店付款。按你的行程来选。", picker:1,
+      bul:["WOWPASS — 预付借记卡＋换汇＋T-money 三合一。在自助机投入外币现金充值。开卡费 ₩5,000。","NAMANE — 可在 App 内用境外卡/Apple&Google Pay 随时充值。卡面可定制。开卡费 ₩7,000。","气候同行卡 — 首尔无限次通票（1/2/3/5/7天 ₩5千–2万）。可用境外卡购买；iPhone 需买实体卡。","T-money — 最简单的刷卡，全国通用。在 CU/GS25/7-11 购买。充值仅限现金。"],
+      warn:["手机版/Apple 钱包 T-money 通常需要韩国卡才能充值 — 多数游客用实体卡+现金，或 WOWPASS/NAMANE。"] },
+    act:[ {en:"WOWPASS",ko:"WOWPASS",ja:"WOWPASS",zh:"WOWPASS",url:LINKS.wowpass},
+          {en:"NAMANE",ko:"NAMANE",ja:"NAMANE",zh:"NAMANE",url:LINKS.namane,ghost:1},
+          {en:"Climate Card",ko:"기후동행카드",ja:"気候同行カード",zh:"气候同行卡",url:LINKS.climate,ghost:1},
+          {en:"Where to buy T-money",ko:"T-money 구매처",ja:"T-money 購入先",zh:"哪买 T-money",url:LINKS.tmoney,ghost:1} ] },
 
-  { id:"ktx", icon:"🚄", nav:{en:"KTX",ko:"KTX"},
+  { id:"ktx", icon:"🚄", nav:{en:"KTX",ko:"KTX",ja:"KTX",zh:"KTX"},
     en:{ title:"Trains (KTX) between cities", desc:"Seoul→Busan in ~2.5h. The trick is booking without the payment headache.",
       bul:["Book with just your passport on Trip.com / Klook / KKday — official Korail partners, foreign cards work, tiny booking fee.","Visiting several cities? A Korail Pass (foreigner-only) is often cheaper and flexible.","At any station you can always buy with passport + card/cash — no app needed."],
       warn:["Korail's own site often fails foreign cards at the 본인인증 / 3-D-Secure step. Use a partner above, or the station counter."],
@@ -263,78 +270,136 @@ const MODULES = [
       bul:["여권만으로 Trip.com / Klook / KKday에서 예매 — 코레일 공식 파트너, 해외카드 OK, 소액 수수료.","여러 도시를 돈다면 외국인 전용 Korail Pass가 더 싸고 유연한 경우가 많아요.","어느 역에서든 여권+카드/현금으로 바로 발권 가능 — 앱 불필요."],
       warn:["코레일 자체 사이트는 본인인증/3DS 단계에서 해외카드가 자주 실패해요. 위 파트너나 역 창구를 이용."],
       bad:["Rail Ninja는 피하세요 — 80~90% 숨은 마크업과 가혹한 환불 수수료."] },
-    act:[ {en:"Search KTX (Trip.com)",ko:"KTX 검색 (Trip.com)",url:LINKS.ktxTrip,aff:1},
-          {en:"KTX & Korail Pass (Klook)",ko:"KTX·Korail Pass (Klook)",url:LINKS.ktxKlook,aff:1},
-          {en:"KKday rail",ko:"KKday 기차",url:LINKS.ktxKKday,aff:1,ghost:1} ] },
+    ja:{ title:"都市間の鉄道（KTX）", desc:"ソウル→釜山 約2時間半。コツは決済で詰まらず予約すること。",
+      bul:["パスポートだけで Trip.com / Klook / KKday から予約 — コレイル公式パートナー、海外カードOK、少額手数料。","複数都市を回るなら外国人専用 Korail Pass が安く柔軟なことが多い。","どの駅でもパスポート+カード/現金で発券可能 — アプリ不要。"],
+      warn:["コレイル公式サイトは本人認証/3DSの段階で海外カードがよく失敗します。上のパートナーか駅の窓口を利用。"],
+      bad:["Rail Ninja は避けて — 80〜90%の隠れマークアップと厳しい返金手数料。"] },
+    zh:{ title:"城际列车（KTX）", desc:"首尔→釜山约 2.5 小时。关键是预订时别卡在支付上。",
+      bul:["仅凭护照即可在 Trip.com / Klook / KKday 预订 — Korail 官方合作方，境外卡可用，手续费很低。","要去多个城市？外国人专用 Korail Pass 往往更便宜灵活。","任何车站都能凭护照+卡/现金现场购票 — 无需 App。"],
+      warn:["Korail 官网常在本人认证/3-D 验证环节让境外卡失败。请用上面的合作方或车站窗口。"],
+      bad:["避开 Rail Ninja — 它加价 80–90%，退款费苛刻。"] },
+    act:[ {en:"Search KTX (Trip.com)",ko:"KTX 검색 (Trip.com)",ja:"KTXを探す (Trip.com)",zh:"查 KTX (Trip.com)",url:LINKS.ktxTrip,aff:1},
+          {en:"KTX & Korail Pass (Klook)",ko:"KTX·Korail Pass (Klook)",ja:"KTX・Korail Pass (Klook)",zh:"KTX·Korail Pass (Klook)",url:LINKS.ktxKlook,aff:1},
+          {en:"KKday rail",ko:"KKday 기차",ja:"KKday 鉄道",zh:"KKday 火车",url:LINKS.ktxKKday,aff:1,ghost:1} ] },
 
-  { id:"taxi", icon:"🚕", nav:{en:"Taxi",ko:"택시"},
+  { id:"taxi", icon:"🚕", nav:{en:"Taxi",ko:"택시",ja:"タクシー",zh:"出租车"},
     en:{ title:"Taxis without the stress", desc:"You don't need to speak Korean or flag one down on the street.",
       bul:["Best for foreigners: k.ride — Kakao's foreigner app. Foreign cards, and it shows your destination to the driver in 100+ languages.","Most drivers are on Kakao T. If your card won't auto-pay, choose “pay to the driver” and pay cash or card in person.","Always set the destination in the app so the driver sees it in Korean — no talking needed."],
       warn:["Google Maps driving directions are unreliable in Korea (map-data law). Use Kakao Map or Naver Map."] },
     ko:{ title:"스트레스 없는 택시", desc:"한국어를 못해도, 길에서 빈 택시를 잡지 않아도 됩니다.",
       bul:["외국인 최적: k.ride — 카카오 외국인 전용 앱. 해외카드 결제, 목적지를 100여 개 언어로 기사에게 표시.","대부분의 기사는 카카오T 사용. 자동결제가 안 되면 “기사에게 직접결제”로 현금/카드 결제.","앱에 목적지를 꼭 입력 → 기사에게 한국어로 표시돼 대화가 필요 없어요."],
       warn:["구글맵 운전 길찾기는 한국서 부실(지도반출 규제). 카카오맵/네이버맵을 쓰세요."] },
-    act:[ {en:"k.ride (foreigner taxi)",ko:"k.ride (외국인 택시)",url:LINKS.kride},
-          {en:"Kakao T",ko:"카카오T",url:LINKS.kakaoT,ghost:1},
-          {en:"Kakao Map",ko:"카카오맵",url:LINKS.kakaomap,ghost:1} ] },
+    ja:{ title:"ストレスのないタクシー", desc:"韓国語を話せなくても、路上で空車を捕まえなくても大丈夫。",
+      bul:["外国人に最適：k.ride — Kakaoの外国人向けアプリ。海外カード対応、目的地を100以上の言語で運転手に表示。","運転手の多くはKakao T。カードの自動決済が通らなければ「運転手に直接支払い」を選び、現金/カードで支払い。","必ずアプリで目的地を設定 → 運転手に韓国語で表示され、会話不要。"],
+      warn:["Googleマップの運転経路は韓国では不正確（地図持出規制）。Kakao MapかNaver Mapを使って。"] },
+    zh:{ title:"打车不再头疼", desc:"不用会韩语，也不用在路边拦空车。",
+      bul:["外国人首选：k.ride — Kakao 的外国人专用 App。支持境外卡，并用 100+ 种语言把目的地展示给司机。","多数司机用 Kakao T。若卡无法自动支付，选“向司机直接支付”，现金或刷卡当面付。","务必在 App 里设好目的地 → 会以韩语显示给司机，无需开口。"],
+      warn:["谷歌地图在韩国的驾车导航不可靠（地图数据外流法规）。请用 Kakao Map 或 Naver Map。"] },
+    act:[ {en:"k.ride (foreigner taxi)",ko:"k.ride (외국인 택시)",ja:"k.ride（外国人タクシー）",zh:"k.ride（外国人打车）",url:LINKS.kride},
+          {en:"Kakao T",ko:"카카오T",ja:"Kakao T",zh:"Kakao T",url:LINKS.kakaoT,ghost:1},
+          {en:"Kakao Map",ko:"카카오맵",ja:"Kakao Map",zh:"Kakao Map",url:LINKS.kakaomap,ghost:1} ] },
 
-  { id:"verify", icon:"🔐", nav:{en:"ID check",ko:"본인인증"},
+  { id:"verify", icon:"🔐", nav:{en:"ID check",ko:"본인인증",ja:"本人認証",zh:"本人认证"},
     en:{ title:"Why apps reject you — and how to get around it", desc:"Many Korean sites demand “본인인증”: an identity check tied to a Korean phone in your name + a Korean ID number. Tourists simply can't pass it. Here's how to route around it.",
       bul:["Use guest checkout / passport wherever offered.","Book through the international partners in this guide instead of Korean-only sites.","Pay in person at counters (stations, box offices).","Use WOWPASS / NAMANE as your “Korean card” for online and offline payments.","Have a Samsung phone? Samsung Pay accepts foreign cards with no Korean ID."],
       warn:["No third-party app can truly give you 본인인증 — it's run by the telecoms + the government and needs a Korean ID number you don't have. The goal is to avoid needing it, not to fake it."] },
     ko:{ title:"앱이 막는 이유 — 그리고 우회법", desc:"많은 한국 사이트가 “본인인증”을 요구합니다: 본인 명의 한국 휴대폰 + 한국 신분번호로 묶인 신원 확인. 관광객은 통과 자체가 불가능해요. 우회하는 법은 이렇습니다.",
       bul:["가능한 곳에선 게스트/여권 결제를 사용.","한국 전용 사이트 대신 이 가이드의 국제 파트너로 예매.","역·매표소 등 현장에서 직접 결제.","온·오프라인 결제는 WOWPASS / NAMANE를 “한국 카드”처럼 사용.","삼성폰이 있다면 삼성페이가 한국 신분증 없이 해외카드 결제 지원."],
       warn:["어떤 제3자 앱도 진짜 본인인증을 줄 수 없습니다 — 통신사+정부가 운영하고, 당신에게 없는 한국 신분번호가 필요하기 때문. 목표는 “위조”가 아니라 “필요 자체를 피하기”."] },
+    ja:{ title:"アプリに弾かれる理由 — その回避法", desc:"多くの韓国サイトは「본인인증（本人認証）」を要求します：本人名義の韓国の電話番号＋韓国の身分番号に紐づく本人確認。旅行者は通過自体が不可能です。回避法はこちら。",
+      bul:["可能な場所ではゲスト/パスポート決済を使う。","韓国専用サイトではなく、本ガイドの国際パートナーで予約。","駅・チケット窓口など現地で直接支払い。","オン/オフライン決済は WOWPASS / NAMANE を「韓国のカード」として使う。","Samsung端末があれば、Samsung Payは韓国の身分証なしで海外カード決済に対応。"],
+      warn:["どの第三者アプリも本物の本人認証は付与できません — 通信会社+政府が運営し、あなたが持たない韓国の身分番号が必要だからです。目標は「偽造」ではなく「必要そのものを避ける」こと。"] },
+    zh:{ title:"为何被应用拒绝 — 以及如何绕开", desc:"许多韩国网站要求“本人认证(본인인증)”：与你本人名下的韩国手机号+韩国身份号码绑定的身份核验。游客根本无法通过。绕开的方法如下。",
+      bul:["凡是支持的地方，使用访客/护照结账。","用本指南里的国际合作方预订，而不是只支持韩语的网站。","在车站、票务窗口等现场当面支付。","线上线下支付把 WOWPASS / NAMANE 当作你的“韩国卡”使用。","有三星手机？Samsung Pay 无需韩国身份证即可用境外卡支付。"],
+      warn:["没有任何第三方应用能真正给你本人认证 — 它由电信运营商+政府运营，需要你没有的韩国身份号码。目标是“避免需要它”，而非伪造。"] },
     act:[] },
 
-  { id:"food", icon:"🍜", nav:{en:"Food",ko:"맛집"},
+  { id:"food", icon:"🍜", nav:{en:"Food",ko:"맛집",ja:"グルメ",zh:"美食"},
     en:{ title:"Find great food — and book it", desc:"Discovery in Korea lives on Korean apps. Here's the foreigner-friendly path.",
       bul:["Reserve in English on CatchTable Global — foreign cards, advance booking and remote waitlists.","Judge a place on Naver Map by visitor reviews (aim 500+ and 4.0+) — not Google, which is sparse here.","Vegetarian/vegan → HappyCow. Halal & special diets → Creatrip guides.","Top-end → Michelin Seoul·Busan and the Blue Ribbon survey (English site)."],
       warn:["No single English app yet combines reviews + reservations + allergen/halal/vegan filters — so you'll mix a couple of these."] },
     ko:{ title:"맛집 찾고 예약하기", desc:"한국의 맛집 탐색은 한국 앱 중심이에요. 외국인 친화 경로는 이렇습니다.",
       bul:["CatchTable Global에서 영어로 예약 — 해외카드, 사전예약·원격 웨이팅.","네이버 지도에선 방문자 리뷰(500+, 평점 4.0+)로 판단 — 구글은 한국서 빈약.","채식/비건 → HappyCow. 할랄·특수식 → Creatrip 가이드.","파인다이닝 → 미쉐린 서울·부산, 블루리본(영문 사이트)."],
       warn:["아직 리뷰+예약+알러지/할랄/비건 필터를 한 번에 묶은 영어 앱이 없어 몇 개를 섞어 써야 해요."] },
-    act:[ {en:"CatchTable Global",ko:"CatchTable Global",url:LINKS.catchtable},
-          {en:"Veg/Vegan (HappyCow)",ko:"채식/비건 (HappyCow)",url:LINKS.happycow,ghost:1},
-          {en:"Blue Ribbon",ko:"블루리본",url:LINKS.bluer,ghost:1} ] },
+    ja:{ title:"美味しい店を見つけ、予約する", desc:"韓国のグルメ探しは韓国アプリ中心。外国人向けの近道はこちら。",
+      bul:["CatchTable Global で英語予約 — 海外カード、事前予約・遠隔ウェイティング。","Naverマップでは訪問者レビュー（500件以上・評価4.0以上）で判断 — Googleは韓国では情報が少ない。","ベジ/ヴィーガン → HappyCow。ハラル・特別食 → Creatrip ガイド。","高級店 → ミシュラン ソウル・釜山、ブルーリボン（英語サイト）。"],
+      warn:["レビュー+予約+アレルゲン/ハラル/ヴィーガンのフィルターを一つにまとめた英語アプリはまだ無く、いくつかを併用することになります。"] },
+    zh:{ title:"找到好吃的 — 还能订位", desc:"韩国的美食发现集中在韩国 App 上。对外国人友好的路线如下。",
+      bul:["在 CatchTable Global 用英文订位 — 境外卡、提前预订与远程排队。","在 Naver 地图上看访客评论（建议 500+ 条、4.0+ 分）判断好坏 — 别看谷歌，这里内容很少。","素食/纯素 → HappyCow。清真及特殊饮食 → Creatrip 攻略。","高端 → 米其林首尔·釜山、Blue Ribbon（英文站）。"],
+      warn:["目前还没有一个英文 App 同时整合点评+订位+过敏原/清真/素食筛选 — 所以你需要混合使用几个。"] },
+    act:[ {en:"CatchTable Global",ko:"CatchTable Global",ja:"CatchTable Global",zh:"CatchTable Global",url:LINKS.catchtable},
+          {en:"Veg/Vegan (HappyCow)",ko:"채식/비건 (HappyCow)",ja:"ベジ/ヴィーガン (HappyCow)",zh:"素食 (HappyCow)",url:LINKS.happycow,ghost:1},
+          {en:"Blue Ribbon",ko:"블루리본",ja:"ブルーリボン",zh:"Blue Ribbon",url:LINKS.bluer,ghost:1} ] },
 
-  { id:"tickets", icon:"🎫", nav:{en:"Tickets",ko:"공연"},
+  { id:"tickets", icon:"🎫", nav:{en:"Tickets",ko:"공연",ja:"チケット",zh:"票务"},
     en:{ title:"Concerts, K-pop & events", desc:"The sharpest pain — Korean ticket sites mostly need a Korean ID/card. Use the global platforms.",
       bul:["International ticketing: NOL World (ex-Interpark Global) and Melon Global — English, foreign cards.","K-pop packages & fan events → Klook and Trazy often hold foreigner allocations.","What's on this week → VisitKorea and Visit Seoul event calendars."],
       warn:["Big shows sometimes release only on Korean-only sites (Interpark/Melon/YES24) — global allocations are limited, so book early."] },
     ko:{ title:"공연·K-pop·이벤트", desc:"가장 날카로운 고통 — 한국 티켓 사이트는 대부분 한국 신분/카드 필요. 글로벌 플랫폼을 쓰세요.",
       bul:["국제 티켓팅: NOL World(구 인터파크 글로벌)·Melon Global — 영어, 해외카드.","K-pop 패키지·팬 이벤트 → Klook·Trazy가 외국인 배정분을 갖는 경우 많음.","이번 주 행사 → VisitKorea·Visit Seoul 이벤트 캘린더."],
       warn:["대형 공연은 한국 전용 사이트(인터파크/멜론/예스24)에서만 풀리기도 해요 — 글로벌 배정분이 적으니 서두르세요."] },
-    act:[ {en:"NOL World",ko:"NOL World",url:LINKS.nol},
-          {en:"Melon Global",ko:"Melon Global",url:LINKS.melon,ghost:1},
-          {en:"K-pop (Klook)",ko:"K-pop (Klook)",url:LINKS.klookKpop,aff:1,ghost:1},
-          {en:"Events (VisitKorea)",ko:"행사 (VisitKorea)",url:LINKS.visitkorea,ghost:1} ] },
+    ja:{ title:"コンサート・K-POP・イベント", desc:"最も厳しい痛点 — 韓国のチケットサイトは多くが韓国の身分証/カードを要求。グローバルなプラットフォームを使いましょう。",
+      bul:["国際チケット：NOL World（旧Interpark Global）・Melon Global — 英語、海外カード対応。","K-POPパッケージ・ファンイベント → KlookやTrazyが外国人枠を持つことが多い。","今週の催し → VisitKorea・Visit Seoul のイベントカレンダー。"],
+      warn:["大型公演は韓国専用サイト（Interpark/Melon/YES24）のみで発売されることもあり、グローバル枠は少ないので早めに。"] },
+    zh:{ title:"演唱会·K-pop·活动", desc:"最棘手的痛点 — 韩国票务网站大多需要韩国身份/卡。请用全球平台。",
+      bul:["国际票务：NOL World（原 Interpark Global）和 Melon Global — 英文、支持境外卡。","K-pop 套票与粉丝活动 → Klook 和 Trazy 常有外国人专属配额。","本周有什么 → VisitKorea 与 Visit Seoul 活动日历。"],
+      warn:["大型演出有时只在韩语网站（Interpark/Melon/YES24）开售 — 全球配额有限，请尽早订。"] },
+    act:[ {en:"NOL World",ko:"NOL World",ja:"NOL World",zh:"NOL World",url:LINKS.nol},
+          {en:"Melon Global",ko:"Melon Global",ja:"Melon Global",zh:"Melon Global",url:LINKS.melon,ghost:1},
+          {en:"K-pop (Klook)",ko:"K-pop (Klook)",ja:"K-POP (Klook)",zh:"K-pop (Klook)",url:LINKS.klookKpop,aff:1,ghost:1},
+          {en:"Events (VisitKorea)",ko:"행사 (VisitKorea)",ja:"イベント (VisitKorea)",zh:"活动 (VisitKorea)",url:LINKS.visitkorea,ghost:1} ] },
 
-  { id:"phrases", icon:"💬", nav:{en:"Phrases",ko:"회화"},
+  { id:"phrases", icon:"💬", nav:{en:"Phrases",ko:"회화",ja:"会話",zh:"短语"},
     en:{ title:"Survival Korean", desc:"Seven phrases that get you through almost anything. Tap Papago for the rest.", phrases:1 },
     ko:{ title:"생존 한국어", desc:"거의 모든 상황을 넘기는 7문장. 나머지는 파파고로.", phrases:1 },
-    act:[ {en:"Open Papago",ko:"파파고 열기",url:LINKS.papago,ghost:1} ] }
+    ja:{ title:"サバイバル韓国語", desc:"ほぼ何でも乗り切れる7フレーズ。残りはPapagoで。", phrases:1 },
+    zh:{ title:"生存韩语", desc:"七句话几乎应付一切。其余交给 Papago。", phrases:1 },
+    act:[ {en:"Open Papago",ko:"파파고 열기",ja:"Papagoを開く",zh:"打开 Papago",url:LINKS.papago,ghost:1} ] }
 ];
 
 const PHRASES = [
-  { en:"Hello", ko:"안녕하세요", ro:"annyeong-haseyo" },
-  { en:"Thank you", ko:"감사합니다", ro:"gamsa-hamnida" },
-  { en:"How much is it?", ko:"얼마예요?", ro:"eolma-yeyo?" },
-  { en:"Please take me to this address (show screen)", ko:"여기로 가주세요", ro:"yeogiro ga-juseyo" },
-  { en:"No meat, please", ko:"고기 빼주세요", ro:"gogi ppae-juseyo" },
-  { en:"Where is the bathroom?", ko:"화장실 어디예요?", ro:"hwajangsil eodi-yeyo?" },
-  { en:"Help, please!", ko:"도와주세요!", ro:"dowa-juseyo!" }
+  { en:"Hello", ja:"こんにちは", zh:"你好", ko:"안녕하세요", ro:"annyeong-haseyo" },
+  { en:"Thank you", ja:"ありがとう", zh:"谢谢", ko:"감사합니다", ro:"gamsa-hamnida" },
+  { en:"How much is it?", ja:"いくらですか？", zh:"多少钱？", ko:"얼마예요?", ro:"eolma-yeyo?" },
+  { en:"Please take me to this address (show screen)", ja:"この住所までお願いします（画面を見せる）", zh:"请送我到这个地址（出示屏幕）", ko:"여기로 가주세요", ro:"yeogiro ga-juseyo" },
+  { en:"No meat, please", ja:"肉抜きでお願いします", zh:"请不要放肉", ko:"고기 빼주세요", ro:"gogi ppae-juseyo" },
+  { en:"Where is the bathroom?", ja:"トイレはどこですか？", zh:"洗手间在哪里？", ko:"화장실 어디예요?", ro:"hwajangsil eodi-yeyo?" },
+  { en:"Help, please!", ja:"助けてください！", zh:"请帮帮我！", ko:"도와주세요!", ro:"dowa-juseyo!" }
 ];
+
+/* picker strings (4 langs) */
+const PK = {
+  qRegion:{en:"Where are you traveling?",ko:"어디를 다니나요?",ja:"どこを旅しますか？",zh:"你主要去哪里？"},
+  seoul:{en:"Mostly Seoul",ko:"주로 서울",ja:"主にソウル",zh:"主要在首尔"},
+  nation:{en:"Several cities",ko:"전국 여러 도시",ja:"複数の都市",zh:"多个城市"},
+  qPhone:{en:"Your phone?",ko:"휴대폰은?",ja:"スマホは？",zh:"你的手机？"},
+  recSeoul:{en:"Climate Card + (optional) WOWPASS",ko:"기후동행카드 + (선택) WOWPASS",ja:"気候同行カード +（任意で）WOWPASS",zh:"气候同行卡 +（可选）WOWPASS"},
+  whySeoul:{en:"Heavy in-Seoul riding is cheapest on the flat-rate pass. On iPhone, buy the physical card. Add WOWPASS if you also want shop payments + currency exchange.",
+    ko:"서울 안에서 많이 타면 정액권이 가장 이득. 아이폰이면 실물카드로 구매하세요. 상점 결제·환전까지 원하면 WOWPASS를 함께.",
+    ja:"ソウル内で多く乗るなら定額パスが最安。iPhoneなら実物カードを購入。店舗決済や両替も欲しいなら WOWPASS を併用。",
+    zh:"主要在首尔内乘车，定额通票最划算。iPhone 请买实体卡。若还想商店支付+换汇，可搭配 WOWPASS。"},
+  recNationA:{en:"NAMANE or WOWPASS (nationwide T-money)",ko:"NAMANE 또는 WOWPASS (전국 T-money)",ja:"NAMANE または WOWPASS（全国対応 T-money）",zh:"NAMANE 或 WOWPASS（全国通用 T-money）"},
+  recNationI:{en:"WOWPASS or NAMANE (nationwide)",ko:"WOWPASS 또는 NAMANE (전국)",ja:"WOWPASS または NAMANE（全国）",zh:"WOWPASS 或 NAMANE（全国）"},
+  whyNation:{en:"For multi-city travel a normal T-money-type card is more flexible than a Seoul pass. Want to top up from the app with a foreign card? NAMANE. Want cash currency-exchange all-in-one? WOWPASS.",
+    ko:"전국을 다니면 정액권보다 일반 T-money형이 유연. 앱에서 해외카드로 충전하고 싶으면 NAMANE, 외화 현금 환전+일체형이면 WOWPASS.",
+    ja:"全国を回るなら定額パスより通常のT-money型が柔軟。アプリで海外カード入金したいなら NAMANE、外貨現金の両替一体型なら WOWPASS。",
+    zh:"多城市出行，普通 T-money 类比首尔通票更灵活。想用海外卡在 App 充值选 NAMANE；想现金换汇一体选 WOWPASS。"}
+};
 
 /* ============================================================
    RENDER
    ============================================================ */
 let lang = (function(){ try{ var s=localStorage.getItem('kr-lang'); if(s) return s; }catch(e){}
-  return (navigator.language||'en').toLowerCase().startsWith('ko') ? 'ko' : 'en'; })();
+  var n=(navigator.language||'en').toLowerCase();
+  if(n.indexOf('ko')===0) return 'ko';
+  if(n.indexOf('ja')===0) return 'ja';
+  if(n.indexOf('zh')===0) return 'zh';
+  return 'en'; })();
 let checked = (function(){ try{ return JSON.parse(localStorage.getItem('kr-checklist'))||{}; }catch(e){ return {}; } })();
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const T = o => (o && (o[lang]||o.en)) || '';
 function L(o){ return o[lang] || o.en; }
 
 function applyStatic(){
@@ -345,12 +410,12 @@ function applyStatic(){
 }
 
 function renderNav(){
-  $('#nav').innerHTML = MODULES.map(m=>`<a href="#${m.id}">${esc(m.icon)} ${esc(m.nav[lang]||m.nav.en)}</a>`).join('');
+  $('#nav').innerHTML = MODULES.map(m=>`<a href="#${m.id}">${esc(m.icon)} ${esc(T(m.nav))}</a>`).join('');
 }
 
 function renderChecklist(){
   $('#clList').innerHTML = CHECK.map((c,i)=>{
-    const [t,d] = c[lang]||c.en; const on = checked[i] ? ' done':'';
+    const [t,d] = L(c); const on = checked[i] ? ' done':'';
     return `<div class="check${on}" data-i="${i}"><div class="box">✓</div><div><div class="t">${esc(t)}</div><div class="d">${esc(d)}</div></div></div>`;
   }).join('');
   const n = CHECK.reduce((a,_,i)=>a+(checked[i]?1:0),0);
@@ -366,18 +431,19 @@ function actionsHTML(act){
   if(!act||!act.length) return '';
   return `<div class="actions">`+act.map(a=>{
     const cls = 'btn'+(a.ghost?' ghost':''); const af = a.aff?` <span class="aff">AD</span>`:'';
-    return `<a class="${cls}" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a[lang]||a.en)}${af}</a>`;
+    return `<a class="${cls}" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(T(a))}${af}</a>`;
   }).join('')+`</div>`;
 }
 
+let pick = { region:'seoul', phone:'iphone' };
 function pickerHTML(){
   return `<div class="picker" id="picker">
-    <div class="q" data-q="region">${lang==='ko'?'어디를 다니나요?':'Where are you traveling?'}</div>
+    <div class="q">${esc(T(PK.qRegion))}</div>
     <div class="row" data-row="region">
-      <button class="opt on" data-v="seoul">${lang==='ko'?'주로 서울':'Mostly Seoul'}</button>
-      <button class="opt" data-v="nation">${lang==='ko'?'전국 여러 도시':'Several cities'}</button>
+      <button class="opt on" data-v="seoul">${esc(T(PK.seoul))}</button>
+      <button class="opt" data-v="nation">${esc(T(PK.nation))}</button>
     </div>
-    <div class="q" data-q="phone">${lang==='ko'?'휴대폰은?':'Your phone?'}</div>
+    <div class="q">${esc(T(PK.qPhone))}</div>
     <div class="row" data-row="phone">
       <button class="opt on" data-v="iphone">iPhone</button>
       <button class="opt" data-v="android">Android</button>
@@ -385,20 +451,10 @@ function pickerHTML(){
     <div class="result" id="pickResult"></div>
   </div>`;
 }
-let pick = { region:'seoul', phone:'iphone' };
 function pickResult(){
-  const ko = lang==='ko';
   let rec, why;
-  if(pick.region==='seoul'){
-    rec = ko?'기후동행카드 + (선택) WOWPASS':'Climate Card + (optional) WOWPASS';
-    why = ko?'서울 안에서 많이 타면 정액권이 가장 이득. 아이폰이면 실물카드로 구매하세요. 상점 결제·환전까지 원하면 WOWPASS를 함께.':
-             'Heavy in-Seoul riding is cheapest on the flat-rate pass. On iPhone, buy the physical card. Add WOWPASS if you also want shop payments + currency exchange.';
-  } else {
-    rec = pick.phone==='android' ? (ko?'NAMANE 또는 WOWPASS (전국 T-money)':'NAMANE or WOWPASS (nationwide T-money)')
-                                 : (ko?'WOWPASS 또는 NAMANE (전국)':'WOWPASS or NAMANE (nationwide)');
-    why = ko?'전국을 다니면 정액권보다 일반 T-money형이 유연. 앱에서 해외카드로 충전하고 싶으면 NAMANE, 외화 현금 환전+일체형이면 WOWPASS.':
-             'For multi-city travel a normal T-money-type card is more flexible than a Seoul pass. Want to top up from the app with a foreign card? NAMANE. Want cash currency-exchange all-in-one? WOWPASS.';
-  }
+  if(pick.region==='seoul'){ rec=T(PK.recSeoul); why=T(PK.whySeoul); }
+  else { rec = pick.phone==='android'?T(PK.recNationA):T(PK.recNationI); why=T(PK.whyNation); }
   const el = $('#pickResult'); if(el) el.innerHTML = `<b>${esc(rec)}</b><div class="cmp">${esc(why)}</div>`;
 }
 function wirePicker(){
@@ -413,7 +469,7 @@ function wirePicker(){
 }
 
 function phrasesHTML(){
-  return `<div class="phr">`+PHRASES.map(p=>`<div class="p"><span class="en">${esc(p.en)}</span><span class="ko">${esc(p.ko)}</span><span class="ro">${esc(p.ro)}</span></div>`).join('')+`</div>`;
+  return `<div class="phr">`+PHRASES.map(p=>`<div class="p"><span class="en">${esc(T(p))}</span><span class="ko">${esc(p.ko)}</span><span class="ro">${esc(p.ro)}</span></div>`).join('')+`</div>`;
 }
 
 function noteHTML(items, kind){
