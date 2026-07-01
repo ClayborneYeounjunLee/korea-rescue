@@ -76,6 +76,20 @@ a{color:inherit}
 .check .d{font-size:12.5px;color:var(--muted);font-weight:400}
 .progress{font-size:12px;color:var(--muted);padding:6px 0 4px}
 
+/* ask / concierge */
+.ask{background:linear-gradient(180deg,var(--accent-soft),var(--card));border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin:14px 0}
+.ask h2{margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:7px}
+.ask .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+.askrow{display:flex;gap:8px}
+.askrow input{flex:1;min-width:0;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;padding:11px 13px;font-size:14px;font-family:inherit}
+.askrow input:focus{outline:2px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:0}
+.askrow button{flex:none;border:0;background:var(--accent);color:#fff;border-radius:11px;padding:0 16px;font-size:17px;font-weight:800;cursor:pointer}
+.askres{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:14px;display:none}
+.askres.show{display:block}
+.askres .a{margin:0 0 8px;line-height:1.55}
+.askres .jump{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--accent);text-decoration:none}
+.askres .aibadge{display:inline-block;font-size:10px;font-weight:800;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 6px;margin-bottom:7px}
+
 /* module cards */
 .mod{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
   padding:18px;margin:14px 0;scroll-margin-top:64px}
@@ -145,6 +159,16 @@ footer .moa{display:inline-flex;align-items:center;gap:6px;margin-top:10px;color
 
   <nav class="nav" id="nav"></nav>
 
+  <section class="ask" id="ask">
+    <h2><span>💬</span><span id="askTitle">Ask anything</span></h2>
+    <p class="sub" id="askHint"></p>
+    <div class="askrow">
+      <input id="askInput" type="text" autocomplete="off" enterkeyhint="search">
+      <button id="askBtn" aria-label="Ask">→</button>
+    </div>
+    <div class="askres" id="askRes"></div>
+  </section>
+
   <section class="checklist" id="checklist">
     <h2 data-i18n="clTitle">Arrival checklist</h2>
     <p class="sub" data-i18n="clSub">Tap to check off. Saved on this device.</p>
@@ -180,7 +204,7 @@ const LINKS = {
   bluer:"https://en.bluer.co.kr/", nol:"https://world.nol.com/en", melon:"https://gticket.melon.com/",
   klookKpop:"https://www.klook.com/en-US/search/?query=kpop", trazy:"https://www.trazy.com/",
   visitkorea:"https://english.visitkorea.or.kr/enu/TRV/calendar.jsp", visitseoul:"https://english.visitseoul.net/events",
-  papago:"https://papago.naver.com/", kakaomap:"https://map.kakao.com/"
+  papago:"https://papago.naver.com/", kakaomap:"https://map.kakao.com/", navermap:"https://map.naver.com/"
 };
 
 /* ============================================================
@@ -297,7 +321,8 @@ const MODULES = [
       warn:["谷歌地图在韩国的驾车导航不可靠（地图数据外流法规）。请用 Kakao Map 或 Naver Map。"] },
     act:[ {en:"k.ride (foreigner taxi)",ko:"k.ride (외국인 택시)",ja:"k.ride（外国人タクシー）",zh:"k.ride（外国人打车）",url:LINKS.kride},
           {en:"Kakao T",ko:"카카오T",ja:"Kakao T",zh:"Kakao T",url:LINKS.kakaoT,ghost:1},
-          {en:"Kakao Map",ko:"카카오맵",ja:"Kakao Map",zh:"Kakao Map",url:LINKS.kakaomap,ghost:1} ] },
+          {en:"Kakao Map",ko:"카카오맵",ja:"Kakao Map",zh:"Kakao Map",url:LINKS.kakaomap,ghost:1},
+          {en:"Naver Map",ko:"네이버 지도",ja:"Naver Map",zh:"Naver 地图",url:LINKS.navermap,ghost:1} ] },
 
   { id:"verify", icon:"🔐", nav:{en:"ID check",ko:"본인인증",ja:"本人認証",zh:"本人认证"},
     en:{ title:"Why apps reject you — and how to get around it", desc:"Many Korean sites demand “본인인증”: an identity check tied to a Korean phone in your name + a Korean ID number. Tourists simply can't pass it. Here's how to route around it.",
@@ -385,6 +410,89 @@ const PK = {
     ja:"全国を回るなら定額パスより通常のT-money型が柔軟。アプリで海外カード入金したいなら NAMANE、外貨現金の両替一体型なら WOWPASS。",
     zh:"多城市出行，普通 T-money 类比首尔通票更灵活。想用海外卡在 App 充值选 NAMANE；想现金换汇一体选 WOWPASS。"}
 };
+
+/* ============================================================
+   CONCIERGE (Ask) — static intent matcher, 4 langs.
+   Optional live AI: set CFG.conciergeApi to your deployed Cloudflare
+   Worker URL (see concierge/worker.js + concierge/README.md).
+   ============================================================ */
+const CFG = { conciergeApi: "" };  // "" = static matcher. Paste your Worker URL to enable live Claude.
+
+const ASK = {
+  en:{ title:"Ask anything", ph:"e.g. How do I book a KTX ticket?", hint:"Describe your problem — I'll point you to the answer.", empty:"I can help with eSIM, money & cards, KTX, taxis, subway, ID verification, food, and tickets. Try one of those.", jump:"Open section", thinking:"Thinking…" },
+  ko:{ title:"무엇이든 물어보세요", ph:"예: KTX 표 어떻게 예매해요?", hint:"고민을 적어주세요 — 답이 있는 곳으로 안내합니다.", empty:"eSIM·돈/카드·KTX·택시·지하철·본인인증·맛집·공연을 도와드려요. 그중 하나를 물어보세요.", jump:"섹션 열기", thinking:"생각 중…" },
+  ja:{ title:"何でも聞いてください", ph:"例: KTXのチケットはどう予約しますか？", hint:"困りごとを入力 — 答えのある場所へ案内します。", empty:"eSIM・お金/カード・KTX・タクシー・地下鉄・本人認証・グルメ・チケットをお手伝いします。", jump:"セクションを開く", thinking:"考え中…" },
+  zh:{ title:"有问题尽管问", ph:"例如：KTX 车票怎么订？", hint:"描述你的问题 — 我会指向答案。", empty:"我可以帮你：eSIM、钱与卡、KTX、出租车、地铁、本人认证、美食、票务。", jump:"打开该部分", thinking:"思考中…" }
+};
+
+const INTENTS = [
+  { mod:"esim", kw:["esim","sim","internet","data","wifi","유심","데이터","통신","ネット","通信","上网","流量","网络"],
+    a:{en:"Buy an eSIM before you land — your foreign card works, no Korean ID needed. It powers maps, taxi and translation.",
+       ko:"내리기 전에 eSIM을 사두세요 — 해외카드로 결제, 한국 신분증 불필요. 지도·택시·번역이 다 여기에 달려 있어요.",
+       ja:"着く前にeSIMを購入 — 海外カードでOK、韓国の身分証は不要。地図・タクシー・翻訳の土台です。",
+       zh:"落地前买好 eSIM — 境外卡可用，无需韩国身份证。地图、打车、翻译都靠它。"} },
+  { mod:"money", kw:["money","card","pay","payment","cash","tmoney","t-money","wowpass","namane","won","현금","카드","결제","교통카드","お金","カード","決済","钱","卡","支付","交通卡"],
+    a:{en:"Get a transit + payment card. Use the picker below to choose between WOWPASS, NAMANE, the Climate Card and T-money for your trip.",
+       ko:"교통+결제 카드를 마련하세요. 아래 선택기로 WOWPASS·NAMANE·기후동행·T-money 중 골라드려요.",
+       ja:"交通＋決済カードを用意。下のピッカーで WOWPASS / NAMANE / 気候同行カード / T-money から選べます。",
+       zh:"办一张交通+支付卡。用下面的选择器在 WOWPASS / NAMANE / 气候卡 / T-money 中挑选。"} },
+  { mod:"ktx", kw:["ktx","train","korail","rail","busan","서울","부산","기차","열차","列車","新幹線","鉄道","火车","高铁","坐车"],
+    a:{en:"Book KTX with just your passport on Trip.com / Klook / KKday — foreign cards work. Avoid Korail's own site (card fails) and Rail Ninja (huge markups).",
+       ko:"여권만으로 Trip.com/Klook/KKday에서 예매하세요 — 해외카드 OK. 코레일 자체 사이트(결제 실패)와 Rail Ninja(과다 마크업)는 피하세요.",
+       ja:"パスポートだけで Trip.com / Klook / KKday から予約 — 海外カードOK。コレイル公式（決済失敗）と Rail Ninja（高マークアップ）は避けて。",
+       zh:"仅凭护照在 Trip.com / Klook / KKday 预订 — 境外卡可用。避开 Korail 官网（易支付失败）和 Rail Ninja（高加价）。"} },
+  { mod:"taxi", kw:["taxi","cab","uber","kakao","택시","タクシー","出租","打车","叫车"],
+    a:{en:"Use k.ride (Kakao's foreigner app — foreign cards, shows your destination to the driver in your language) or Kakao T with “pay to the driver”.",
+       ko:"k.ride(카카오 외국인 앱 — 해외카드, 목적지를 기사에게 표시) 또는 카카오T에서 “기사에게 직접결제”를 쓰세요.",
+       ja:"k.ride（Kakaoの外国人向けアプリ — 海外カード、目的地を運転手に表示）か、Kakao Tの「運転手に直接支払い」を。",
+       zh:"用 k.ride（Kakao 外国人 App — 境外卡，目的地展示给司机）或 Kakao T 的“向司机直接支付”。"} },
+  { mod:"verify", kw:["verify","verification","identity","본인인증","인증","認証","认证","phone number","sms","otp"],
+    a:{en:"Tourists can't pass Korean “본인인증” — it needs a Korean ID number. Route around it: passport/guest checkout, international partners, station counters, WOWPASS/NAMANE for payments.",
+       ko:"관광객은 “본인인증”을 통과할 수 없어요(한국 신분번호 필요). 우회하세요: 여권/게스트 결제, 국제 파트너, 역 창구, 결제는 WOWPASS/NAMANE.",
+       ja:"観光客は「본인인증」を通過できません（韓国の身分番号が必要）。回避：パスポート/ゲスト決済、国際パートナー、駅窓口、決済はWOWPASS/NAMANE。",
+       zh:"游客无法通过韩国“本人认证”（需韩国身份号）。绕开它：护照/访客结账、国际合作方、车站窗口、支付用 WOWPASS/NAMANE。"} },
+  { mod:"food", kw:["food","eat","restaurant","dinner","lunch","맛집","먹","밥","식당","グルメ","ご飯","食べ","レストラン","吃","餐厅","美食","halal","vegan","vegetarian","비건","채식"],
+    a:{en:"Reserve in English on CatchTable Global. Judge spots by Naver visitor reviews (500+, 4.0+). Veg/halal → HappyCow & Creatrip.",
+       ko:"CatchTable Global에서 영어로 예약. 네이버 방문자 리뷰(500+, 4.0+)로 판단. 채식/할랄 → HappyCow·Creatrip.",
+       ja:"CatchTable Globalで英語予約。Naver訪問者レビュー（500件+・4.0+）で判断。ベジ/ハラル → HappyCow・Creatrip。",
+       zh:"在 CatchTable Global 用英文订位。按 Naver 访客评论（500+、4.0+）判断。素食/清真 → HappyCow、Creatrip。"} },
+  { mod:"tickets", kw:["ticket","concert","kpop","k-pop","show","event","공연","티켓","콘서트","チケット","コンサート","ライブ","票","演唱会","活动"],
+    a:{en:"For K-pop & concerts use NOL World, Melon Global, or Klook/Trazy — Korean ticket sites need a Korean ID/card. Book early; foreigner allocations are limited.",
+       ko:"K-pop·공연은 NOL World·Melon Global·Klook/Trazy를 쓰세요 — 한국 티켓 사이트는 한국 신분/카드 필요. 외국인 배정분이 적으니 서둘러요.",
+       ja:"K-POP・公演は NOL World・Melon Global・Klook/Trazy を。韓国のチケットサイトは韓国の身分証/カードが必要。外国人枠は少ないので早めに。",
+       zh:"K-pop 与演唱会用 NOL World、Melon Global 或 Klook/Trazy — 韩国票务网站需韩国身份/卡。外国人配额有限，尽早订。"} }
+];
+
+function matchIntent(q){
+  const n=(q||'').toLowerCase().trim(); if(!n) return null;
+  let best=null,bestScore=0;
+  for(const it of INTENTS){ let score=0; for(const k of it.kw){ if(k && n.indexOf(k.toLowerCase())>=0) score++; } if(score>bestScore){ bestScore=score; best=it; } }
+  return best;
+}
+function showAskResult(html){ const el=$('#askRes'); if(el){ el.innerHTML=html; el.classList.add('show'); } }
+function askLocal(q){
+  const a=ASK[lang], it=matchIntent(q);
+  if(!it){ showAskResult(`<div class="a">${esc(a.empty)}</div>`); return; }
+  const mod=MODULES.find(m=>m.id===it.mod), title=mod?esc(L(mod).title):'';
+  showAskResult(`<div class="a">${esc(it.a[lang]||it.a.en)}</div><a class="jump" href="#${it.mod}">${esc(a.jump)}: ${mod?esc(mod.icon)+' '+title:''} →</a>`);
+}
+async function askLive(q){
+  const a=ASK[lang];
+  showAskResult(`<div class="a">${esc(a.thinking)}</div>`);
+  try{
+    const r=await fetch(CFG.conciergeApi,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,lang:lang})});
+    if(!r.ok) throw 0;
+    const d=await r.json();
+    showAskResult(`<span class="aibadge">AI</span><div class="a">${esc(d.answer||'').replace(/\n/g,'<br>')}</div>`);
+  }catch(e){ askLocal(q); }   // graceful fallback to the static matcher
+}
+function doAsk(){ const q=(($('#askInput')||{}).value)||''; if(!q.trim()) return; CFG.conciergeApi ? askLive(q) : askLocal(q); }
+function applyAsk(){
+  const a=ASK[lang];
+  if($('#askTitle')) $('#askTitle').textContent=a.title;
+  if($('#askHint')) $('#askHint').textContent=a.hint;
+  if($('#askInput')) $('#askInput').placeholder=a.ph;
+}
 
 /* ============================================================
    RENDER
@@ -492,7 +600,11 @@ function renderMods(){
   wirePicker();
 }
 
-function renderAll(){ applyStatic(); renderNav(); renderChecklist(); renderMods(); }
+function renderAll(){ applyStatic(); applyAsk(); renderNav(); renderChecklist(); renderMods(); }
+
+/* ask wiring (once) */
+$('#askBtn').onclick = doAsk;
+$('#askInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doAsk(); });
 
 /* theme */
 function setTheme(t){ document.documentElement.setAttribute('data-theme',t);
